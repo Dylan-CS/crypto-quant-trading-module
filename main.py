@@ -20,21 +20,21 @@ class CryptoQuantTrading:
         self.performance_monitor = PerformanceMonitor(self.config)
         
     def run(self):
-        """运行交易策略"""
+        """Run trading strategy"""
         while True:
             try:
-                # 获取并保存市场数据
+                # Fetch and save market data
                 df = self.data_fetcher.get_historical_data()
                 self.database.save_klines(df, self.config.trading.symbol)
                 
-                # 计算信号
+                # Calculate signals
                 df = self.strategy.calculate_signals(df)
                 
-                # 获取最新信号
+                # Get latest signal
                 current_signal = df['signal'].iloc[-1]
                 current_price = df['close'].iloc[-1]
                 
-                # 风险检查和交易执行
+                # Risk check and trade execution
                 if current_signal == 1 and self.executor.position != 'LONG':
                     if self.risk_manager.check_order(
                         self.config.trading.symbol,
@@ -44,19 +44,19 @@ class CryptoQuantTrading:
                     ):
                         order = self.executor.place_order('BUY')
                         if order:
-                            self.logger.logger.info(f"执行买入: {order}")
+                            self.logger.logger.info(f"Executed buy: {order}")
                             self.risk_manager.update_position(
                                 self.config.trading.symbol,
                                 self.config.trading.quantity,
                                 current_price
                             )
                 
-                # 更新性能指标
+                # Update performance metrics
                 self.performance_monitor.log_metrics()
                 
                 time.sleep(60)
                 
             except Exception as e:
-                self.logger.logger.error(f"策略运行错误: {e}")
+                self.logger.logger.error(f"Strategy run error: {e}")
                 time.sleep(60)
 

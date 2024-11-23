@@ -8,17 +8,17 @@ class Logger:
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.INFO)
         
-        # 创建格式化器
+        # Create formatter
         formatter = logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
         
-        # 控制台处理器
+        # Console handler
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
         
-        # 文件处理器
+        # File handler
         if log_file:
             log_path = Path("logs")
             log_path.mkdir(exist_ok=True)
