@@ -12,11 +12,11 @@ class BacktestEngine:
         self.trades: List[Dict] = []
         
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        """运行回测"""
-        # 计算信号
+        """Run backtest"""
+        # Calculate signals
         df = self.strategy.calculate_signals(df)
         
-        # 模拟交易
+        # Simulate trading
         position = 0
         for i in range(len(df)):
             signal = df['signal'].iloc[i]
@@ -24,7 +24,7 @@ class BacktestEngine:
             timestamp = df.index[i]
             
             if signal == 1 and position <= 0:
-                # 买入
+                # Buy
                 self.trades.append({
                     'timestamp': timestamp,
                     'type': 'buy',
@@ -34,7 +34,7 @@ class BacktestEngine:
                 position = 1
                 
             elif signal == -1 and position >= 0:
-                # 卖出
+                # Sell
                 self.trades.append({
                     'timestamp': timestamp,
                     'type': 'sell',
@@ -46,6 +46,6 @@ class BacktestEngine:
         return self._calculate_performance(df)
         
     def _calculate_performance(self, df: pd.DataFrame) -> pd.DataFrame:
-        """计算回测性能指标"""
-        # 实现回测性能计算逻辑
+        """Calculate backtest performance metrics"""
+        # Implement backtest performance calculation logic
         return df 
