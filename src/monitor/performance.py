@@ -13,16 +13,16 @@ class PerformanceMonitor:
         self.metrics: Dict[str, Any] = {}
         
     def update_metrics(self):
-        """更新性能指标"""
+        """Update performance metrics"""
         self.metrics.update({
             'cpu_usage': psutil.cpu_percent(),
             'memory_usage': psutil.Process().memory_info().rss / 1024 / 1024,  # MB
             'runtime': time.time() - self.start_time,
-            'order_count': 0,  # 需要实现订单计数
-            'error_count': 0   # 需要实现错误计数
+            'order_count': 0,  # Implement order counting
+            'error_count': 0   # Implement error counting
         })
         
     def log_metrics(self):
-        """记录性能指标"""
+        """Log performance metrics"""
         self.update_metrics()
-        self.logger.logger.info(f"性能指标: {self.metrics}") 
+        self.logger.logger.info(f"Performance metrics: {self.metrics}") 
