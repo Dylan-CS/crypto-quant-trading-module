@@ -7,13 +7,13 @@ class TradingStrategy:
         self.config = config
     
     def calculate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """计算交易信号"""
+        """Calculate trading signals"""
         df = self._calculate_indicators(df)
         df = self._generate_signals(df)
         return df
     
     def _calculate_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
-        """计算技术指标"""
+        """Calculate technical indicators"""
         df['SMA_short'] = df['close'].rolling(
             window=self.config.trading.short_window).mean()
         df['SMA_long'] = df['close'].rolling(
@@ -21,7 +21,7 @@ class TradingStrategy:
         return df
     
     def _generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """生成交易信号"""
+        """Generate trading signals"""
         df['signal'] = 0
         df.loc[df['SMA_short'] > df['SMA_long'], 'signal'] = 1
         df.loc[df['SMA_short'] < df['SMA_long'], 'signal'] = -1

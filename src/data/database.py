@@ -11,18 +11,18 @@ class Database:
         self.engine = create_engine('sqlite:///data/crypto_trading.db')
         
     def save_klines(self, df: pd.DataFrame, symbol: str):
-        """保存K线数据"""
+        """Save K-line data"""
         try:
             table_name = f'klines_{symbol.lower()}'
             df.to_sql(table_name, self.engine, if_exists='append')
-            self.logger.logger.info(f"保存K线数据成功: {symbol}")
+            self.logger.logger.info(f"Successfully saved K-line data: {symbol}")
         except Exception as e:
-            self.logger.logger.error(f"保存K线数据失败: {e}")
+            self.logger.logger.error(f"Failed to save K-line data: {e}")
             
     def load_klines(self, symbol: str, 
                    start_time: Optional[str] = None, 
                    end_time: Optional[str] = None) -> pd.DataFrame:
-        """加载K线数据"""
+        """Load K-line data"""
         table_name = f'klines_{symbol.lower()}'
         query = f"SELECT * FROM {table_name}"
         

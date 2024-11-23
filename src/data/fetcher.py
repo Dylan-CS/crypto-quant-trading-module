@@ -12,7 +12,7 @@ class DataFetcher:
                           symbol: Optional[str] = None, 
                           interval: Optional[str] = None, 
                           limit: Optional[int] = None) -> pd.DataFrame:
-        """获取历史K线数据"""
+        """Get historical candlestick data"""
         symbol = symbol or self.config.trading.symbol
         interval = interval or self.config.trading.interval
         limit = limit or self.config.trading.limit
@@ -26,7 +26,7 @@ class DataFetcher:
         return self._process_klines(klines)
     
     def _process_klines(self, klines: list) -> pd.DataFrame:
-        """处理K线数据"""
+        """Process candlestick data"""
         df = pd.DataFrame(klines, columns=[
             'timestamp', 'open', 'high', 'low', 'close', 
             'volume', 'close_time', 'quote_volume', 'trades',

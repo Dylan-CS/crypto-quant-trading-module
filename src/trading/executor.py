@@ -10,7 +10,7 @@ class OrderExecutor:
         self.position = None
     
     def place_order(self, side: str, quantity: Optional[float] = None) -> Optional[Dict[str, Any]]:
-        """执行订单"""
+        """Execute order"""
         quantity = quantity or self.config.trading.quantity
         
         try:
@@ -23,5 +23,5 @@ class OrderExecutor:
             self.position = 'LONG' if side == SIDE_BUY else 'SHORT'
             return order
         except Exception as e:
-            print(f"订单执行错误: {e}")
+            print(f"Order execution error: {e}")
             return None 
